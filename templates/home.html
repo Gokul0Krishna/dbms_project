@@ -1,9 +1,55 @@
+<!-- 
+/ is the root of the current drive;
+./ is the current directory;
+../ is the parent of the current directory. 
+-->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Flask App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="stylesheet" href='../static/styles.css'>
 </head>
 <body>
-    <h1>Welcome to My Flask App!</h1>
+    <header class="header">
+        <nav class="nav">
+            <h1>Logo</h1>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h2>Welcome to Our Website</h2>
+            <p>Discover amazing features and services that will transform your experience</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="features">
+            <article class="feature-card">
+                <h3>Feature 1</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Feature 2</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+            </article>
+            <article class="feature-card">
+                <h3>Feature 3</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+            </article>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2023 Your Company Name. All rights reserved.</p>
+    </footer>
 </body>
 </html>
