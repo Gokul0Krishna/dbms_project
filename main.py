@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request,session, redirect, url_for
 from forms import SignupForm,SigninForm
+import tableaction
+
+table=tableaction.Tableaction()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '123'
@@ -16,7 +19,13 @@ def signup():
         lname=form.Lastname.data
         email = form.email.data
         password = form.password.data
-    
+        resources={
+            "fname":fname,
+            "lname":lname,
+            "email":email,
+            "password":password
+        }
+        table.adddata(tablename="user",resources=resources)
         return redirect(url_for('home'))
     return render_template('signup.html', form=form)
 
@@ -26,8 +35,11 @@ def signin():
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
-        print(email,password)
-        return redirect(url_for('home'))
+        res=table.check(email=email,password=password)
+        if res:
+            return redirect(url_for('home'))
+        else:
+            
     return render_template('signin.html', form=form)
 
 
