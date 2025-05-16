@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request,session, redirect, url_for
+from flask import Flask, render_template, request,session, redirect, url_for,flash
 from forms import SignupForm,SigninForm
 import tableaction
 
@@ -39,11 +39,12 @@ def signin():
         if res:
             return redirect(url_for('home'))
         else:
-            
+            flash('incorrect password or email')        
     return render_template('signin.html', form=form)
 
-
-
+@app.route("/<bookname>",methods=['GET', 'POST'])
+def bookpage(bookname):
+    pass
 
 if __name__ == '__main__':
     app.run(debug=True)
