@@ -44,7 +44,8 @@ def signin():
 
 @app.route("/<bookname>",methods=['GET', 'POST'])
 def bookpage(bookname):
-    pass
-
+    print(bookname)
+    data=table.fetchdata(bookname=bookname)
+    return render_template("book.html", book=data)
 if __name__ == '__main__':
     app.run(debug=True)
