@@ -8,6 +8,8 @@ class Tableaction:
         self.i=0
         self.j=0
         self.k=0
+        self.uid=''
+        self.bid=''
 
     def get_db(self):
         if not hasattr(self.local, 'conn'):
@@ -52,8 +54,8 @@ class Tableaction:
                 VALUES (?, ?, ?, ?, ?)"""
             values = (
             f'BW{self.k}', 
-            resources['UserID'], 
-            resources['BookID'],
+            self.uid,
+            self.bid,
             today, 
             date_object, 
             0
@@ -65,12 +67,15 @@ class Tableaction:
     def check(self,email:str,password:str):
         cursor, conn = self.get_db()
         # cursor, _ = self.get_db()
-        cursor.execute("SELECT password FROM user WHERE email = ?", (email,))
+        cursor.execute("SELECT userid, password FROM user WHERE email = ?", (email,))
         result = cursor.fetchone()
         conn.close()
         if result:
-            stored_hash = result[0]
-            return check_password_hash(stored_hash, password)
+            userid=result[0]
+            stored_hash = result[1]
+            if check_password_hash(stored_hash, password):
+                self.uid=userid
+                return True
         else:
             return False
     
@@ -80,7 +85,12 @@ class Tableaction:
         SELECT * FROM book 
         WHERE Title = ?
         """, (bookname,))
+
         row = cursor.fetchone()
-        return row
-        
+        if row:
+            self.bid=row[0]
+            print(self.bid)
+            return row
+        else:
+            return False
 

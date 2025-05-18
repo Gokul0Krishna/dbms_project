@@ -7,3 +7,10 @@
 <a href="{{ url_for('signup') }}">Sign_up</a>
 <a href="{{ url_for('signin') }}">Sign_in</a>
 <a href="{{ url_for('bookpage', bookname='Night Owl') }}">Book</a>
+<form method="POST" action="{{ url_for('home') }}" class="mb-4">
+            {{ form.hidden_tag() }}
+            <div class="input-group">
+                {{ form.search_query(class="form-control", placeholder="Search...") }}
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+</form>
