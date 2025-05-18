@@ -85,8 +85,8 @@ class Tableaction:
         SELECT * FROM book 
         WHERE Title = ?
         """, (bookname,))
-
         row = cursor.fetchone()
+        conn.close()
         if row:
             self.bid=row[0]
             print(self.bid)
@@ -94,3 +94,12 @@ class Tableaction:
         else:
             return False
 
+    def findname(self):
+        cursor, conn = self.get_db()
+        cursor.execute("""
+            SELECT First_Name,Last_name FROM user 
+            WHERE Userid = ?
+            """, (self.uid,))
+        name = cursor.fetchone()
+        conn.close() 
+        return name

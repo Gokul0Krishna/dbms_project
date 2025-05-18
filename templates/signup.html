@@ -1,4 +1,4 @@
-<form method="POST" action="{{ url_for('signup') }}">
+<!-- <form method="POST" action="{{ url_for('signup') }}">
     {{ form.hidden_tag() }}
     
     <div>
@@ -36,4 +36,148 @@
     <div>
         <input type="submit" value="Sign up">
     </div>
-</form>
+</form> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Heritage Library</title>
+    <style>
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            background-color: #F4E9DC;
+            min-height: 100vh;
+        }
+
+       nav {
+            background-color: #836953;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .home-link {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .home-link:hover {  
+            color: #E8D0B7;
+        }
+
+        .form-container {
+            max-width: 400px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: #FFFCF9;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        form div {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #5C4A3E;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid #9C5D41;
+            border-radius: 3px;
+            font-size: 1rem;
+        }
+
+        input[type="submit"] {
+            background-color: #9C5D41;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #7A4A32;
+        }
+
+        .error {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .form-container {
+                margin: 2rem 1rem;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('home') }}" class="home-link">Home</a>
+    </nav>
+
+    <div class="form-container">
+        <form method="POST" action="{{ url_for('signup') }}">
+            {{ form.hidden_tag() }}
+            
+            <div>
+                {{ form.Firstname.label }}
+                {{ form.Firstname(size=20) }}
+                {% for error in form.Firstname.errors %}
+                    <span class="error">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+
+            <div>
+                {{ form.Lastname.label }}
+                {{ form.Lastname(size=20) }}
+                {% for error in form.Lastname.errors %}
+                    <span class="error">[{{ error }}]</span>
+                {% endfor %}
+            </div> 
+
+            <div>
+                {{ form.email.label }}
+                {{ form.email(size=20) }}
+                {% for error in form.email.errors %}
+                    <span class="error">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+
+            <div>
+                {{ form.password.label }}
+                {{ form.password(size=20) }}
+                {% for error in form.password.errors %}
+                    <span class="error">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+
+            <div>
+                <input type="submit" value="Sign up">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

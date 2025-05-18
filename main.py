@@ -10,12 +10,14 @@ app.config['SECRET_KEY'] = '123'
 @app.route("/",methods=['GET','POST'])
 def home():
     form = Searchbar()
+    firstname=table.findname()
     if form.validate_on_submit():
         dt=form.search_query.data
         if dt:
             return redirect(url_for('bookpage', bookname=dt))
         
-    return render_template('home.html',form=form)
+    return render_template('home.html',form=form,data=firstname)
+
 
 @app.route("/signup",methods=['GET', 'POST'])
 def signup():
@@ -51,9 +53,9 @@ def signin():
 @app.route("/<bookname>",methods=['GET', 'POST'])
 def bookpage(bookname):
     data=table.fetchdata(bookname=bookname)
-    print(data)
+    # print(data)
     if data:
-        return render_template("book.html", book=data) 
+        return render_template("book.html") 
     else:
         return render_template('booknotfound.html')
 

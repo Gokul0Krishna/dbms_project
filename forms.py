@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm 
-from wtforms import StringField, PasswordField, validators ,SubmitField
+from wtforms import StringField, PasswordField, validators ,SubmitField, SelectField
 
 class SignupForm(FlaskForm):
     Firstname = StringField('Firstname', [
@@ -35,3 +35,9 @@ class Searchbar(FlaskForm):
         render_kw={"placeholder": "Search by book name"},
         )
     submit = SubmitField('Search')
+
+class Singup(FlaskForm):
+    sgnup = SubmitField('Sign UP')
+
+class Singin(FlaskForm):
+    sgnin = SubmitField('Sign UP')
