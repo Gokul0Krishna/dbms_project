@@ -1,18 +1,215 @@
-<span>
+<!-- <span>
     <img 
     src="http://books.google.com/books/content?id=KwhmCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" 
     alt="Book Cover"
     width="150"
     >
+
+    {% if check%}
+     <span class="welcome-text">{{ data[0] }} {{ data[1] }}</span>
+    <a href="{{ url_for('signup') }}">Sign Up</a>
+    <a href="{{ url_for('signin') }}">Sign In</a>
+    {% else %}
+    <a href="{{ url_for('signup') }}">Sign Up</a>
+    <a href="{{ url_for('signin') }}">Sign In</a>
+    
+    {% endif %}
+
     <p>title:{{ data[1] }}</p>
     <p>Aurthor:{{ data[2] }}</p>
     <p>Published date:{{ data[5]}}</p>
     <p>description:{{data[4]}}</p>
     
     {% if data[3]==0 %}
-            <p>available</p>
-            
+            <p>Status:available</p>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.borrow(class="btn btn-primary") }}
+            </form>
             {% else %}
-                <p>unavailable</p>
+                <p>Status:unavailable</p>
             {% endif %}
-</span>
+</span> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ data[1] }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            background-color: #F4E9DC;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #836953;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .home-link {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .home-link:hover {
+            color: #E8D0B7;
+        }
+
+        .auth-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .auth-links a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .auth-links a:hover {
+            color: #E8D0B7;
+        }
+
+        .welcome-text {
+            color: #E8D0B7;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .book-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #FFFCF9;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 2rem;
+        }
+
+        .book-cover img {
+            width: 150px;
+            height: auto;
+            border: 1px solid #9C5D41;
+            border-radius: 3px;
+        }
+
+        .book-details {
+            flex: 1;
+        }
+
+        .book-details p {
+            margin-bottom: 1rem;
+            color: #5C4A3E;
+            line-height: 1.5;
+        }
+
+        .book-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #7A4A32;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary {
+            background-color: #9C5D41;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #7A4A32;
+        }
+
+        .status-available {
+            color: #2E8B57;
+            font-weight: bold;
+        }
+
+        .status-unavailable {
+            color: #B22222;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .book-container {
+                flex-direction: column;
+                padding: 1.5rem;
+                margin: 1.5rem;
+            }
+            
+            nav {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('home') }}" class="home-link">Home</a>
+        <div class="auth-links">
+            <span class="welcome-text">{{ name }}</span>
+        </div>
+    </nav>
+
+    <div class="book-container">
+        <div class="book-cover">
+            <img 
+                src="http://books.google.com/books/content?id=KwhmCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" 
+                alt="{{ data[1] }} Cover"
+                onerror="this.onerror=null; this.src='https://via.placeholder.com/150x200?text=No+Cover';"
+            >
+        </div>
+        
+        <div class="book-details">
+            <h1 class="book-title">{{ data[1] }}</h1>
+            <p><strong>Author:</strong> {{ data[2] }}</p>
+            <p><strong>Published date:</strong> {{ data[5] }}</p>
+            <p><strong>Description:</strong> {{ data[4] }}</p>
+            
+            <!-- {% if data[3] == 0 %}
+                <p class="status-available">Status: Available</p>
+                {% if check %}
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <input type="submit" value="Borrow" class="btn-primary">
+                    </form>
+                {% else %}
+                    <p>Please <a href="{{ url_for('signin') }}">sign in</a> to borrow this book</p>
+                {% endif %}
+            {% else %}
+                <p class="status-unavailable">Status: Unavailable</p>
+            {% endif %} -->
+            {% if data[3]==0 %}
+            <p class="status-available">Status: Available</p>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                {{ form.borrow(class="btn btn-primary") }}
+            </form>
+            {% else %}
+                <p>Status:unavailable</p>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
