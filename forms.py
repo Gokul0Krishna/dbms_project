@@ -18,6 +18,9 @@ class SignupForm(FlaskForm):
         validators.Length(min=4, max=25)
     ])
 
+class Borrow(FlaskForm):
+    borrow = SubmitField('Borrow')
+
 
 class SigninForm(FlaskForm):
     email = StringField('Email Address', [

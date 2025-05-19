@@ -132,6 +132,7 @@
 
     <div class="form-container">
         <form method="POST" action="{{ url_for('home') }}">
+            {{ form.hidden_tag() }}
             <div class="input-group">
                 <input type="text" name="search_query" placeholder="Search our collection...">
                 <input type="submit" value="Search">

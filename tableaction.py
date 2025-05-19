@@ -103,3 +103,13 @@ class Tableaction:
         name = cursor.fetchone()
         conn.close() 
         return name
+    
+    def setstatus(self,data):
+        cursor, conn = self.get_db()
+        cursor.execute("""
+            UPDATE book 
+            SET Status = ? 
+            WHERE Bookid = ?
+        """, (data, self.bid))
+        conn.commit()
+        conn.close() 

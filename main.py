@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request,session, redirect, url_for,flash
-from forms import SignupForm,SigninForm,Searchbar
+from forms import *
 import tableaction
 
 table=tableaction.Tableaction()
@@ -12,6 +12,7 @@ def home():
     form = Searchbar()
     firstname=table.findname()
     if form.validate_on_submit():
+        print('i')
         dt=form.search_query.data
         if dt:
             return redirect(url_for('bookpage', bookname=dt))
@@ -52,10 +53,16 @@ def signin():
 
 @app.route("/<bookname>",methods=['GET', 'POST'])
 def bookpage(bookname):
+    print(bookname)
+    form = Borrow()
     data=table.fetchdata(bookname=bookname)
-    # print(data)
     if data:
-        return render_template("book.html") 
+        form = Borrow()
+        if form.validate_on_submit():
+            table.adddata(tablename="borrow")
+            data[3]=1-data[3]
+                
+        return render_template("book.html",data=data) 
     else:
         return render_template('booknotfound.html')
 

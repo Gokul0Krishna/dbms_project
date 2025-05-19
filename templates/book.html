@@ -1,1 +1,18 @@
-<p>book found</p>
+<span>
+    <img 
+    src="http://books.google.com/books/content?id=KwhmCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" 
+    alt="Book Cover"
+    width="150"
+    >
+    <p>title:{{ data[1] }}</p>
+    <p>Aurthor:{{ data[2] }}</p>
+    <p>Published date:{{ data[5]}}</p>
+    <p>description:{{data[4]}}</p>
+    
+    {% if data[3]==0 %}
+            <p>available</p>
+            
+            {% else %}
+                <p>unavailable</p>
+            {% endif %}
+</span>
