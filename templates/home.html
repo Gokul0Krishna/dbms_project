@@ -122,7 +122,8 @@
         <a href="{{ url_for('home') }}" class="site-title">Home</a>
         <div class="auth-links">
             {% if data %}
-            <span class="welcome-text">{{ data[0] }}</span>
+            <!-- <span class="welcome-text">{{ data[0] }}</span> -->
+            <a href="{{url_for('profile',username=data[0])}}" class="welcome-text">{{data[0]}}</a>
             {% else %}
                 <a href="{{ url_for('signup') }}">Sign Up</a>
                 <a href="{{ url_for('signin') }}">Sign In</a>

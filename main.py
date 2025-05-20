@@ -11,7 +11,6 @@ app.config['SECRET_KEY'] = '123'
 def home():
     form = Searchbar()
     firstname=table.findname()
-
     if form.validate_on_submit():
         print('i')
         dt=form.search_query.data
@@ -61,12 +60,12 @@ def bookpage(bookname):
     print(bookname)
     form = Borrow()
     data=table.fetchdata(bookname=bookname)
+    name=table.findname()
     try:
         data=list(data)
+        name=list(name) 
     except:
         pass
-    name=table.findname()
-    name=list(name) 
     if data:
         form = Borrow()
         if form.validate_on_submit():
@@ -75,20 +74,28 @@ def bookpage(bookname):
             if check:
                 table.adddataborrow()
                 print(name)
-                data[3]=1-int(data[3])         
+                data[3]=1-int(data[3])
+                table.setstatus(data[3])         
                 return render_template("book.html",data=data,name=name[0])
             else:
                 return redirect(url_for('signin'))
-        
-        print(data)
-        return render_template("book.html",data=data,form=form,name=name[0]) 
+        check=table.Signedin()
+        if check:
+            return render_template("book.html",data=data,form=form,name=name[0])
+        else:
+            return render_template("book.html",data=data,form=form) 
     else:
         return render_template('booknotfound.html')
     
 @app.route("/<username>",methods=['GET', 'POST'])
-def porfile(username):
-
-    return
+def profile(username):
+    print(username)
+    try:
+        res=table.getdataborrow()
+        print(res)
+    except:
+        pass
+    return render_template("profile.html")
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -168,14 +168,21 @@
     <nav>
         <a href="{{ url_for('home') }}" class="home-link">Home</a>
         <div class="auth-links">
-            <span class="welcome-text">{{ name }}</span>
+            {% if name %}
+            <!-- <span class="welcome-text">{{ data[0] }}</span> -->
+            <a href="{{url_for('profile',username=name)}}" class="welcome-text">{{name}}</a>
+            {% else %}
+                <a href="{{ url_for('signup') }}">Sign Up</a>
+                <a href="{{ url_for('signin') }}">Sign In</a>
+            {% endif %}
+            <!-- <span class="welcome-text">{{ name }}</span> -->
         </div>
     </nav>
 
     <div class="book-container">
         <div class="book-cover">
             <img 
-                src="http://books.google.com/books/content?id=KwhmCgAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" 
+                src={{data[6]}} 
                 alt="{{ data[1] }} Cover"
                 onerror="this.onerror=null; this.src='https://via.placeholder.com/150x200?text=No+Cover';"
             >
