@@ -9,6 +9,7 @@ app.config['SECRET_KEY'] = '123'
 
 @app.route("/",methods=['GET','POST'])
 def home():
+    # table.reset()#remove
     form = Searchbar()
     firstname=table.findname()
     if form.validate_on_submit():
@@ -75,7 +76,8 @@ def bookpage(bookname):
                 table.adddataborrow()
                 print(name)
                 data[3]=1-int(data[3])
-                table.setstatus(data[3])         
+                table.setstatus(data[3])
+                print(data)         
                 return render_template("book.html",data=data,name=name[0])
             else:
                 return redirect(url_for('signin'))

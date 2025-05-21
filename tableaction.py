@@ -151,3 +151,9 @@ class Tableaction:
                 WHERE Bookid = ?
             """, (self.bid,))
             conn.commit()
+    
+    def reset(self):
+        with self._get_connection() as conn:
+            cursor=conn.cursor()
+            cursor.execute("UPDATE book SET Status = 0")
+            conn.commit()
