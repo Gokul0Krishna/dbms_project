@@ -87,7 +87,7 @@ def bookpage(bookname):
     else:
         return render_template('booknotfound.html')
     
-@app.route("/<username>",methods=['GET', 'POST'])
+@app.route("/user-<username>",methods=['GET', 'POST'])
 def profile(username):
     print(username)
     try:
@@ -95,7 +95,7 @@ def profile(username):
         print(res)
     except:
         pass
-    return render_template("profile.html")
+    return render_template('user.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
