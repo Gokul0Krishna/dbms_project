@@ -138,7 +138,14 @@ class Tableaction:
     def getdataborrow(self):
         with self._get_connection() as conn:
             cursor = conn.cursor()
-            cursor.execute("SELECT * FROM borrow")
+            cursor.execute("SELECT * FROM borrow WHERE Userid = ?", (self.i,))
+            data=cursor.fetchall()
+            return data
+    def getdatauser(self):
+        # self.i=1#remove
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT First_name,Last_Name,Email FROM user WHERE Userid = ?", (self.i,))
             data=cursor.fetchall()
             return data
     
@@ -151,9 +158,29 @@ class Tableaction:
                 WHERE Bookid = ?
             """, (self.bid,))
             conn.commit()
+
+    def getbookdata(self,bokid:int):
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT Title , Img FROM book WHERE Bookid = ?", (bokid,))
+            data=cursor.fetchone()
+            return data
     
     def reset(self):
         with self._get_connection() as conn:
             cursor=conn.cursor()
             cursor.execute("UPDATE book SET Status = 0")
             conn.commit()
+
+    def fine(self):
+        with self._get_connection() as conn:
+            self.i=1
+            cursor = conn.cursor()
+            cursor.execute("SELECT DueDate FROM borrow WHERE UserID = ?", (self.i,))
+            data=cursor.fetchone()
+            data=data[0]
+            from datetime import date
+            today = date.today()
+            if data<today:
+                cursor.execute(f"UPDATE user SET Fine = {today-data}")
+                conn.commit()

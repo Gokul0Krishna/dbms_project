@@ -91,13 +91,19 @@ def bookpage(bookname):
     
 @app.route("/user-<username>",methods=['GET', 'POST'])
 def profile(username):
-    print(username)
+    data=table.getdatauser()
+    data=list(data)
+    table.fine()
     try:
         res=table.getdataborrow()
-        print(res)
     except:
         pass
-    return render_template('user.html')
+    if res:
+        ult=[]
+        for i in res:
+            ult.append(table.getbookdata(i[1]))
+        return render_template('user.html',data=data,res=res,ult=ult)
+    return render_template('user.html',data=data)
 
 if __name__ == '__main__':
     app.run(debug=True)
