@@ -91,7 +91,7 @@ def bookpage(bookname):
                 if f2.validate_on_submit():
                     # print("aaaa")    
                     table.resetfine()
-                    return redirect(url_for('bookpage'))
+                    return redirect(url_for('bookpage',bookname=data[1]))
 
             
         check=table.Signedin()
@@ -127,6 +127,7 @@ def profile(username):
         ult=[]
         for i in res:
             ult.append(table.getbookdata(i[1]))
+            table.fine(i[1])
         return render_template('user.html',data=data,res=res,ult=ult)
     return render_template('user.html',data=data)
 

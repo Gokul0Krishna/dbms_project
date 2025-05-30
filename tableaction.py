@@ -172,18 +172,20 @@ class Tableaction:
             cursor.execute("UPDATE book SET Status = 0")
             conn.commit()
 
-    # def fine(self):
-    #     with self._get_connection() as conn:
-    #         self.i=1
-    #         cursor = conn.cursor()
-    #         cursor.execute("SELECT DueDate FROM borrow WHERE UserID = ?", (self.i,))
-    #         data=cursor.fetchone()
-    #         data=data[0]
-    #         from datetime import date
-    #         today = date.today()
-    #         if data<today:
-    #             cursor.execute(f"UPDATE user SET Fine = {today-data}")
-    #             conn.commit()
+    def fine(self,bokid:int):
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT DueDate FROM borrow WHERE BookID = ?", (bokid,))
+            data=cursor.fetchall()       
+            from datetime import date,datetime
+            today = date.today()
+            for i in data:
+                due_date_str = i[0]
+                due_date = datetime.strptime(due_date_str, "%Y-%m-%d").date()
+                if due_date<today:
+                    cursor.execute(f"UPDATE book SET Fine = {today-due_date} WHERE Bookid = ?",(bokid,))
+                    cursor.execute(f"UPDATE book SET Status = 1 WHERE Bookid = ?",(bokid,))
+                    conn.commit()
 
     def resetfine(self):
         with self._get_connection() as conn:
@@ -191,7 +193,7 @@ class Tableaction:
             cursor.execute("SELECT Fine FROM book WHERE Bookid = ?", (self.bid,))
             data=cursor.fetchone()
             if int(data[0])>0:
-                return True
+                pass
             else:
                 cursor.execute("UPDATE book SET Status = 0 WHERE Bookid = ?", (self.bid,))
                 conn.commit()
