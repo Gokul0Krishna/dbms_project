@@ -35,8 +35,8 @@ class Tableaction:
             self.i=self.i+1
             print(self.i)
             query = f"""INSERT INTO user 
-                (Userid, First_Name, Last_Name, Status, Email, Password,Fine) 
-                VALUES (?, ?, ?, ?, ?, ?, ?)"""
+                (Userid, First_Name, Last_Name, Status, Email, Password) 
+                VALUES (?, ?, ?, ?, ?, ?)"""
             values = (
             self.i, 
             resources['fname'], 
@@ -44,7 +44,6 @@ class Tableaction:
             0, 
             resources['email'], 
             resources['password'],
-            0
             )
             cursor.execute(query, values)
             self.signedin=True
@@ -141,6 +140,7 @@ class Tableaction:
             cursor.execute("SELECT * FROM borrow WHERE Userid = ?", (self.i,))
             data=cursor.fetchall()
             return data
+    
     def getdatauser(self):
         # self.i=1#remove
         with self._get_connection() as conn:
@@ -172,15 +172,38 @@ class Tableaction:
             cursor.execute("UPDATE book SET Status = 0")
             conn.commit()
 
-    def fine(self):
+    # def fine(self):
+    #     with self._get_connection() as conn:
+    #         self.i=1
+    #         cursor = conn.cursor()
+    #         cursor.execute("SELECT DueDate FROM borrow WHERE UserID = ?", (self.i,))
+    #         data=cursor.fetchone()
+    #         data=data[0]
+    #         from datetime import date
+    #         today = date.today()
+    #         if data<today:
+    #             cursor.execute(f"UPDATE user SET Fine = {today-data}")
+    #             conn.commit()
+
+    def resetfine(self):
         with self._get_connection() as conn:
-            self.i=1
             cursor = conn.cursor()
-            cursor.execute("SELECT DueDate FROM borrow WHERE UserID = ?", (self.i,))
+            cursor.execute("SELECT Fine FROM book WHERE Bookid = ?", (self.bid,))
             data=cursor.fetchone()
-            data=data[0]
-            from datetime import date
-            today = date.today()
-            if data<today:
-                cursor.execute(f"UPDATE user SET Fine = {today-data}")
+            if int(data[0])>0:
+                return True
+            else:
+                cursor.execute("UPDATE book SET Status = 0 WHERE Bookid = ?", (self.bid,))
                 conn.commit()
+                cursor.execute("DELETE FROM borrow WHERE Bookid = ?", (self.bid,))
+                conn.commit()
+
+    def checkusid(self):
+         with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("""
+                SELECT 1 
+                FROM borrow 
+                WHERE UserID = ? AND BookID = ?
+            """, (self.i, self.bid))
+            return cursor.fetchone()

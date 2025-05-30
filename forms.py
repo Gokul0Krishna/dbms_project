@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm 
-from wtforms import StringField, PasswordField, validators ,SubmitField, SelectField
+from wtforms import StringField, PasswordField, validators ,SubmitField, SelectField, HiddenField 
 
 class SignupForm(FlaskForm):
     Firstname = StringField('Firstname', [
@@ -44,3 +44,6 @@ class Singup(FlaskForm):
 
 class Singin(FlaskForm):
     sgnin = SubmitField('Sign UP')
+
+class Return(FlaskForm):
+    rturn = SubmitField('Return')

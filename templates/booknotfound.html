@@ -1,1 +1,116 @@
-<p>File is not found</p>
+<!-- <p>Book not found</p> -->
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Not Found</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            background-color: #F4E9DC;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #836953;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .home-link {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .home-link:hover {
+            color: #E8D0B7;
+        }
+
+        .auth-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .auth-links a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .auth-links a:hover {
+            color: #E8D0B7;
+        }
+
+        .welcome-text {
+            color: #E8D0B7;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .not-found-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            background-color: #FFFCF9;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .not-found-message {
+            font-size: 1.5rem;
+            color: #7A4A32;
+            margin-bottom: 1.5rem;
+        }
+
+        .home-redirect {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #9C5D41;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .home-redirect:hover {
+            color: #7A4A32;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .not-found-container {
+                margin: 1.5rem;
+                padding: 1.5rem;
+            }
+            
+            nav {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('home') }}" class="home-link">Home</a>
+    </nav>
+
+    <div class="not-found-container">
+        <h1 class="not-found-message">Book Not Found</h1>
+        <!-- <p>The requested book could not be located in our collection.</p> -->
+        <a href="{{ url_for('home') }}" class="home-redirect">Return to Homepage</a>
+    </div>
+</body>
+</html>

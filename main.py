@@ -9,6 +9,7 @@ app.config['SECRET_KEY'] = '123'
 
 @app.route("/",methods=['GET','POST'])
 def home():
+    # table.fine()
     # table.reset()#remove
     form = Searchbar()
     firstname=table.findname()
@@ -59,7 +60,6 @@ def signin():
 @app.route("/<bookname>",methods=['GET', 'POST'])
 def bookpage(bookname):
     print(bookname)
-    form = Borrow()
     data=table.fetchdata(bookname=bookname)
     name=table.findname()
     try:
@@ -67,22 +67,41 @@ def bookpage(bookname):
         name=list(name) 
     except:
         pass
+    print(data)
     if data:
         form = Borrow()
-        if form.validate_on_submit():
-            check=table.Signedin()
-            print(check)
-            if check:
-                table.adddataborrow()
-                print(name)
-                data[3]=1-int(data[3])
-                table.setstatus(data[3])
-                print(data)         
-                return render_template("book.html",data=data,name=name[0])
-            else:
-                return redirect(url_for('signin'))
+        f2=Return()
+
+        if request.method == 'POST':
+            if 'borrow' in request.form:  # Borrow form was submitted
+                if form.validate_on_submit():
+                    check=table.Signedin()
+                    # print(check)
+                    if check:
+                        table.adddataborrow()
+                        # print(name)
+                        data[3]=1-int(data[3])
+                        table.setstatus(data[3])
+                        # print(data)         
+                        return render_template("book.html",data=data,name=name[0])
+                    else:
+                        return redirect(url_for('signin'))
+        
+            elif 'rturn' in request.form:  # Return form was submitted
+                if f2.validate_on_submit():
+                    # print("aaaa")    
+                    table.resetfine()
+                    return redirect(url_for('bookpage'))
+
+            
         check=table.Signedin()
         if check:
+            fin=table.checkusid()
+            if fin:
+                # print("aaaa")
+                # print(data) 
+                return render_template("book.html",data=data,name=name[0],form1=f2)
+
             return render_template("book.html",data=data,form=form,name=name[0])
         else:
             return render_template("book.html",data=data,form=form) 
@@ -91,9 +110,15 @@ def bookpage(bookname):
     
 @app.route("/user-<username>",methods=['GET', 'POST'])
 def profile(username):
+    # form=Return()
+    # # print("ame")
+    # if form.validate_on_submit():
+    #     na=form.book_id.data 
+    #     print(na + "fuck u")
+    #     # fuc=table.resetfine(bname)
+
     data=table.getdatauser()
     data=list(data)
-    table.fine()
     try:
         res=table.getdataborrow()
     except:
@@ -106,4 +131,4 @@ def profile(username):
     return render_template('user.html',data=data)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+        app.run(debug=True)

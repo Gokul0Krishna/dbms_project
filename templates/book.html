@@ -207,15 +207,22 @@
             {% else %}
                 <p class="status-unavailable">Status: Unavailable</p>
             {% endif %} -->
-            {% if data[3]==0 %}
-            <p class="status-available">Status: Available</p>
-            <form method="POST">
-                {{ form.hidden_tag() }}
-                {{ form.borrow(class="btn btn-primary") }}
-            </form>
+            {% if form1 %}
+                <form method="POST">
+                    {{ form1.hidden_tag() }}
+                    {{ form1.rturn(class="btn btn-primary") }}
+                </form>
             {% else %}
-                <p>Status:unavailable</p>
-            {% endif %}
+                {% if data[3]==0 %}
+                <p class="status-available">Status: Available</p>
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                    {{ form.borrow(class="btn btn-primary") }}
+                </form>
+                {% else %}
+                    <p>Status:unavailable</p>
+                {% endif %}
+            {% endif %}    
         </div>
     </div>
 </body>
