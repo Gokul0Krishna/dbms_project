@@ -106,11 +106,16 @@
     <nav>
         <a href="{{ url_for('home') }}" class="home-link">Home</a>
     </nav>
+    {% if key %}
+    <h1 class="not-found-message">Pay the fine at the library to return the book</h1>
 
-    <div class="not-found-container">
-        <h1 class="not-found-message">Book Not Found</h1>
-        <!-- <p>The requested book could not be located in our collection.</p> -->
-        <a href="{{ url_for('home') }}" class="home-redirect">Return to Homepage</a>
-    </div>
+
+    {% else %}
+        <div class="not-found-container">
+            <h1 class="not-found-message">Book Not Found</h1>
+            <!-- <p>The requested book could not be located in our collection.</p> -->
+            <a href="{{ url_for('home') }}" class="home-redirect">Return to Homepage</a>
+        </div>
+    {% endif %}
 </body>
 </html>

@@ -193,7 +193,7 @@ class Tableaction:
             cursor.execute("SELECT Fine FROM book WHERE Bookid = ?", (self.bid,))
             data=cursor.fetchone()
             if int(data[0])>0:
-                pass
+                return True
             else:
                 cursor.execute("UPDATE book SET Status = 0 WHERE Bookid = ?", (self.bid,))
                 conn.commit()

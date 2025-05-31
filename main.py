@@ -90,7 +90,8 @@ def bookpage(bookname):
             elif 'rturn' in request.form:  # Return form was submitted
                 if f2.validate_on_submit():
                     # print("aaaa")    
-                    table.resetfine()
+                    if(table.resetfine()):
+                        return render_template('booknotfound.html',key=True)
                     return redirect(url_for('bookpage',bookname=data[1]))
 
             
