@@ -12,6 +12,7 @@ def home():
     # table.fine()
     # table.reset()#remove
     form = Searchbar()
+    f2= Randomize()
     firstname=table.findname()
     if form.validate_on_submit():
         print('i')
@@ -92,9 +93,7 @@ def bookpage(bookname):
                     # print("aaaa")    
                     if(table.resetfine()):
                         return render_template('booknotfound.html',key=True)
-                    return redirect(url_for('bookpage',bookname=data[1]))
-
-            
+                    return redirect(url_for('bookpage',bookname=data[1]))         
         check=table.Signedin()
         if check:
             fin=table.checkusid()
@@ -117,6 +116,10 @@ def profile(username):
     #     na=form.book_id.data 
     #     print(na + "fuck u")
     #     # fuc=table.resetfine(bname)
+    form=Singout()
+    if form.validate_on_submit():
+        table.signout()
+        return redirect(url_for('home'))
 
     data=table.getdatauser()
     data=list(data)
@@ -129,8 +132,8 @@ def profile(username):
         for i in res:
             ult.append(table.getbookdata(i[1]))
             table.fine(i[1])
-        return render_template('user.html',data=data,res=res,ult=ult)
-    return render_template('user.html',data=data)
+        return render_template('user.html',data=data,res=res,ult=ult,form=form)
+    return render_template('user.html',data=data,form=form)
 
 if __name__ == '__main__':
         app.run(debug=True)

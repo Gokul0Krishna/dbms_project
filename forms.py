@@ -39,11 +39,11 @@ class Searchbar(FlaskForm):
         )
     submit = SubmitField('Search')
 
-class Singup(FlaskForm):
-    sgnup = SubmitField('Sign UP')
+class Singout(FlaskForm):
+    sgnup = SubmitField('Sign Out')
 
-class Singin(FlaskForm):
-    sgnin = SubmitField('Sign UP')
+class Randomize(FlaskForm):
+    rand = SubmitField("I'm Feeling Lucky")
 
 class Return(FlaskForm):
     rturn = SubmitField('Return')

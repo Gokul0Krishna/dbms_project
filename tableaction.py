@@ -2,6 +2,7 @@ import sqlite3
 import threading
 from werkzeug.security import generate_password_hash, check_password_hash
 from contextlib import contextmanager
+import random
 
 class Tableaction:
     def __init__(self):
@@ -209,3 +210,15 @@ class Tableaction:
                 WHERE UserID = ? AND BookID = ?
             """, (self.i, self.bid))
             return cursor.fetchone()
+    
+    def signout(self):
+            self.i=0
+            self.signedin=False
+
+    def randX(self):
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute(f"SELECT COUNT(*) FROM book")
+            val=random.randint(0,(cursor.fetchone()[0])-1)
+            cursor.execute("SELECT  FROM book WHERE Bookid = ?", (self.bid,))
+            data=cursor.fetchone()

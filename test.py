@@ -1,4 +1,4 @@
 import tableaction
 table=tableaction.Tableaction()
-data=table.fine()
+data=table.randX()
 
