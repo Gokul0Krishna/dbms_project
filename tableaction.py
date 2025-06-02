@@ -220,5 +220,17 @@ class Tableaction:
             cursor = conn.cursor()
             cursor.execute(f"SELECT COUNT(*) FROM book")
             val=random.randint(0,(cursor.fetchone()[0])-1)
-            cursor.execute("SELECT  FROM book WHERE Bookid = ?", (self.bid,))
+            val=f"B{val}"
+            cursor.execute("SELECT Title FROM book WHERE Bookid = ?", (val,))
             data=cursor.fetchone()
+            return data[0]
+        
+    def checkbook(self):
+        if self.bid !='':
+            with self._get_connection() as conn:
+                cursor = conn.cursor()
+                cursor.execute("SELECT Title FROM book WHERE Bookid = ?", (self.bid,))
+                data=cursor.fetchone()
+                return data[0]
+        else:
+            return False

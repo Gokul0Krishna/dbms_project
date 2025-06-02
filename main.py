@@ -14,13 +14,21 @@ def home():
     form = Searchbar()
     f2= Randomize()
     firstname=table.findname()
-    if form.validate_on_submit():
-        print('i')
-        dt=form.search_query.data
-        if dt:
-            return redirect(url_for('bookpage', bookname=dt))
+
+    if request.method == 'POST':
+        if 'rand' in request.form:  # Borrow form was submitted
+            if form.validate_on_submit():
+                print("fuvk")
+                name=table.randX()
+                return redirect(url_for('bookpage', bookname=name))
+        else:   
+            if form.validate_on_submit():
+                print('i')
+                dt=form.search_query.data
+                if dt:
+                    return redirect(url_for('bookpage', bookname=dt))
         
-    return render_template('home.html',form=form,data=firstname)
+    return render_template('home.html',form=form,data=firstname,f2=f2)
 
 
 @app.route("/signup",methods=['GET', 'POST'])
@@ -42,7 +50,11 @@ def signup():
         except:
             pass
         table.adddatauser(resources=resources)
-        return redirect(url_for('home'))
+        name=table.checkbook()
+        if name:
+            return redirect(url_for('bookpage', bookname=name))
+        else:
+            return redirect(url_for('home'))
     return render_template('signup.html', form=form)
 
 @app.route("/signin",methods=['GET', 'POST'])
@@ -53,7 +65,11 @@ def signin():
         password = form.password.data
         res=table.check(email=email,password=password)
         if res:
-            return redirect(url_for('home'))
+            name=table.checkbook()
+            if name:
+                return redirect(url_for('bookpage', bookname=name))
+            else:
+                return redirect(url_for('home'))
         else:
             flash('incorrect password or email')        
     return render_template('signin.html', form=form)
