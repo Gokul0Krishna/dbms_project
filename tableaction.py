@@ -234,3 +234,14 @@ class Tableaction:
                 return data[0]
         else:
             return False
+        
+    def getauth(self):
+        with self._get_connection() as conn:
+                a=[]
+                cursor = conn.cursor()
+                cursor.execute("SELECT DISTINCT Author FROM book")
+                data=cursor.fetchall()
+                for i in data:
+                    i=i[0].replace("  "," ")
+                    a.append(i)
+                return a

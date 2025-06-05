@@ -1,3 +1,4 @@
 import tableaction
 table=tableaction.Tableaction()
-data=table.randX()
+data=table.getauth()
+print(data)
