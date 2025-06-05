@@ -151,5 +151,14 @@ def profile(username):
         return render_template('user.html',data=data,res=res,ult=ult,form=form)
     return render_template('user.html',data=data,form=form)
 
+@app.route("/author-<authorname>",methods=['GET', 'POST'])
+def authors(authorname):
+    data=table.getauthdetails(authname=authorname)
+    data=list(data)
+    bd=table.getbooks(authname=authorname)
+    bd=list(bd)
+    return render_template("author.html",data=data,bd=bd)
+
+
 if __name__ == '__main__':
         app.run(debug=True)

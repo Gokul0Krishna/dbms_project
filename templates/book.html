@@ -190,7 +190,8 @@
         
         <div class="book-details">
             <h1 class="book-title">{{ data[1] }}</h1>
-            <p><strong>Author:</strong> {{ data[2] }}</p>
+            <p><strong>Author:</strong><a href="{{ url_for('authors',authorname=data[2]) }}" class="home-link">{{ data[2] }}</a></p>
+            <!-- <p><strong>Author:</strong> {{ data[2] }}</p> -->
             <p><strong>Published date:</strong> {{ data[5] }}</p>
             <p><strong>Description:</strong> {{ data[4] }}</p>
             

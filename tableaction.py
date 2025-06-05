@@ -245,3 +245,16 @@ class Tableaction:
                     i=i[0].replace("  "," ")
                     a.append(i)
                 return a
+    
+    def getauthdetails(self,authname):
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT * FROM author WHERE Name = ?", (authname,))
+            data=cursor.fetchone()
+            return data
+    def getbooks(self,authname):
+        with self._get_connection() as conn:
+            cursor = conn.cursor()
+            cursor.execute("SELECT Title,Img FROM book WHERE Author = ?", (authname,))
+            data=cursor.fetchall()
+            return data

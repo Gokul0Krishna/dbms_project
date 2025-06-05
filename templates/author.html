@@ -1,0 +1,18 @@
+    author name:{{data[0]}}
+    birthdate:{{data[1]}}
+    nationality:{{data[4]}}
+    age:{{data[5]}}
+    birthplace{{data[3]}}
+    discription:{{data[2]}}
+
+    {% for i in range(bd | length) %}
+    <div class="book-item">
+        <div class="book-details">
+            <h4 class="book-title">
+                <a href="{{ url_for('bookpage', bookname=bd[i][0]) }}">{{ bd[i][0] }}</a>
+            </h4>
+        </div>
+        <img src="{{ bd[i][1] }}" alt="{{ bd[i][0] }} cover" class="book-cover" 
+                onerror="this.onerror=null; this.src='https://via.placeholder.com/100x150?text=No+Cover'">
+    </div>
+    {% endfor %}

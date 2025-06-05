@@ -1,4 +1,4 @@
 import tableaction
 table=tableaction.Tableaction()
-data=table.getauth()
+data=table.getbooks('Jenn Bennett')
 print(data)
