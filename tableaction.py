@@ -258,3 +258,5 @@ class Tableaction:
             cursor.execute("SELECT Title,Img FROM book WHERE Author = ?", (authname,))
             data=cursor.fetchall()
             return data
+    
+    

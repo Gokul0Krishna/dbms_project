@@ -1,4 +1,4 @@
-    author name:{{data[0]}}
+    <!-- author name:{{data[0]}}
     birthdate:{{data[1]}}
     nationality:{{data[4]}}
     age:{{data[5]}}
@@ -15,4 +15,194 @@
         <img src="{{ bd[i][1] }}" alt="{{ bd[i][0] }} cover" class="book-cover" 
                 onerror="this.onerror=null; this.src='https://via.placeholder.com/100x150?text=No+Cover'">
     </div>
-    {% endfor %}
+    {% endfor %} -->
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Author Profile - Heritage Library</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+
+        body {
+            background-color: #F4E9DC;
+            min-height: 100vh;
+            color: #5C4A3E;
+        }
+
+        nav {
+            background-color: #836953;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .site-title {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 1.4rem;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .auth-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #FFFFFF;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #E8D0B7;
+        }
+
+        .author-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: #FFFCF9;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .author-info {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #E8D0B7;
+        }
+
+        .author-info p {
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .author-description {
+            margin-top: 1.5rem;
+            font-style: italic;
+        }
+
+        .books-list {
+            margin-top: 2rem;
+        }
+
+        .books-list h3 {
+            color: #7A4A32;
+            margin-bottom: 1.5rem;
+        }
+
+        .book-item {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid #E8D0B7;
+            align-items: center;
+        }
+
+        .book-cover {
+            width: 120px;
+            height: auto;
+            border: 1px solid #9C5D41;
+            border-radius: 3px;
+        }
+
+        .book-details {
+            flex: 1;
+        }
+
+        .book-title {
+            font-size: 1.2rem;
+            color: #7A4A32;
+            margin-bottom: 0.5rem;
+        }
+
+        .book-title a {
+            color: #9C5D41;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .book-title a:hover {
+            color: #7A4A32;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+            
+            .author-container {
+                margin: 1rem;
+                padding: 1.5rem;
+            }
+            
+            .book-item {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .book-cover {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('home') }}" class="site-title">Home</a>
+        <div class="auth-links">
+            {% if check %}
+                <a href="{{url_for('profile',username=check)}}" class="welcome-text">{{name}}</a>
+            {% else %}
+                <a href="{{ url_for('signup') }}">Sign Up</a>
+                <a href="{{ url_for('signin') }}">Sign In</a>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="author-container">
+        <div class="author-info">
+            <h2>{{ data[0] }}</h2>
+            <p><strong>Birthdate:</strong> {{ data[1] }}</p>
+            <p><strong>Nationality:</strong> {{ data[4] }}</p>
+            <p><strong>Age:</strong> {{ data[5] }}</p>
+            <p><strong>Birthplace:</strong> {{ data[3] }}</p>
+            <div class="author-description">
+                <p>{{ data[2] }}</p>
+            </div>
+        </div>
+
+        {% if bd %}
+        <div class="books-list">
+            <h3>Published Works</h3>
+            {% for i in range(bd | length) %}
+            <div class="book-item">
+                <img src="{{ bd[i][1] }}" alt="{{ bd[i][0] }} cover" class="book-cover" 
+                     onerror="this.onerror=null; this.src='https://via.placeholder.com/120x180?text=No+Cover'">
+                <div class="book-details">
+                    <h4 class="book-title">
+                        <a href="{{ url_for('bookpage', bookname=bd[i][0]) }}">{{ bd[i][0] }}</a>
+                    </h4>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

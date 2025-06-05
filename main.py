@@ -25,9 +25,11 @@ def home():
             if form.validate_on_submit():
                 print('i')
                 dt=form.search_query.data
-                if dt:
-                    return redirect(url_for('bookpage', bookname=dt))
-        
+                t=table.getauthdetails(authname=dt)
+                if t:
+                    return redirect(url_for('authors',authorname=dt))
+                else:    
+                    return redirect(url_for('bookpage', bookname=dt))  
     return render_template('home.html',form=form,data=firstname,f2=f2)
 
 
@@ -156,8 +158,10 @@ def authors(authorname):
     data=table.getauthdetails(authname=authorname)
     data=list(data)
     bd=table.getbooks(authname=authorname)
-    bd=list(bd)
-    return render_template("author.html",data=data,bd=bd)
+    bd=list(set(bd))
+    check=table.Signedin()
+    name=table.findname()
+    return render_template("author.html",data=data,bd=bd,check=check,name=name)
 
 
 if __name__ == '__main__':

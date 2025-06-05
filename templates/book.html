@@ -151,6 +151,18 @@
             font-weight: bold;
         }
 
+        .author-link {
+            color: #7A4A32; /* A color that stands out but fits the theme */
+            text-decoration: none; /* Remove underline */
+            font-weight: bold; /* Make the author's name bold */
+            transition: color 0.3s ease; /* Smooth color transition on hover */
+        }
+
+        .author-link:hover {
+            color: #9C5D41; /* Slightly different color on hover */
+            text-decoration: underline; /* Add underline on hover for better indication */
+        }
+
         @media (max-width: 768px) {
             .book-container {
                 flex-direction: column;
@@ -190,7 +202,7 @@
         
         <div class="book-details">
             <h1 class="book-title">{{ data[1] }}</h1>
-            <p><strong>Author:</strong><a href="{{ url_for('authors',authorname=data[2]) }}" class="home-link">{{ data[2] }}</a></p>
+            <p><strong>Author:</strong><a href="{{ url_for('authors',authorname=data[2]) }}" class="author-link">{{ data[2] }}</a></p>
             <!-- <p><strong>Author:</strong> {{ data[2] }}</p> -->
             <p><strong>Published date:</strong> {{ data[5] }}</p>
             <p><strong>Description:</strong> {{ data[4] }}</p>
